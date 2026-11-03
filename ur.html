@@ -1,0 +1,589 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Letter for You ♡</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&family=Patrick+Hand&display=swap');
+
+:root {
+  --rose:#a52d4d;
+  --paper:#f3dfbd;
+  --ink:#8f2342;
+}
+
+* { box-sizing:border-box; }
+
+body {
+  margin:0;
+  min-height:100vh;
+  overflow-x:hidden;
+  color:#5b2935;
+  display:grid;
+  place-items:center;
+  padding:32px 16px;
+  background:
+    radial-gradient(ellipse at 18% 15%,#fff4e7 0,transparent 34%),
+    radial-gradient(ellipse at 85% 80%,#e8b9b3 0,transparent 36%),
+    linear-gradient(135deg,#f8e7d6,#edc7c0 55%,#f7dfd2);
+  font-family:'DM Sans',sans-serif;
+}
+
+body:before {
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.24;
+  background-image:radial-gradient(#a96d5d .55px,transparent .55px);
+  background-size:7px 7px;
+}
+
+.scene {
+  width:min(100%,760px);
+  min-height:720px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+}
+
+.intro {
+  text-align:center;
+  margin-bottom:28px;
+  z-index:2;
+}
+
+.eyebrow {
+  color:#9d5360;
+  text-transform:uppercase;
+  letter-spacing:.25em;
+  font-size:10px;
+  font-weight:600;
+}
+
+h1 {
+  font:600 clamp(30px,6vw,46px)/1.15 'Playfair Display',serif;
+  color:#80304a;
+  margin:9px 0 8px;
+}
+
+.intro p {
+  margin:0;
+  color:#93636a;
+  font-size:13px;
+}
+
+.envelope-wrap {
+  width:min(92vw,560px);
+  height:360px;
+  position:relative;
+  perspective:1200px;
+  margin-top:8px;
+}
+
+.envelope {
+  position:absolute;
+  z-index:1;
+  inset:55px 0 0;
+  height:285px;
+  border-radius:8px;
+  background:repeating-linear-gradient(
+    135deg,#b83c5c 0 24px,#f4d9bd 24px 48px
+  );
+  box-shadow:0 24px 55px #71364a38;
+  overflow:visible;
+}
+
+.envelope:before {
+  content:"";
+  position:absolute;
+  inset:13px;
+  border-radius:4px;
+  background:linear-gradient(145deg,#f6dfc4,#e8c49e);
+  opacity:.94;
+}
+
+/* TULIP FLOWERS */
+
+.flower-bunch {
+  position:absolute;
+  z-index:0;
+  width:142px;
+  height:190px;
+  bottom:3px;
+  pointer-events:none;
+  transform-origin:bottom center;
+  animation:tulipSway 5s ease-in-out infinite;
+  filter:drop-shadow(0 7px 5px #75444a20);
+}
+
+.flower-bunch.left {
+  left:-76px;
+  transform:rotate(-5deg);
+}
+
+.flower-bunch.right {
+  right:-76px;
+  transform:scaleX(-1) rotate(-5deg);
+  animation-delay:-2.5s;
+}
+
+.flower-bunch svg {
+  width:100%;
+  height:100%;
+  overflow:visible;
+}
+
+@keyframes tulipSway {
+  0%,100% { rotate:-2deg; }
+  50% { rotate:3deg; }
+}
+
+/* LETTER */
+
+.back-pocket {
+  position:absolute;
+  inset:0;
+  background:#d9b48f;
+  clip-path:polygon(0 0,100% 0,100% 100%,50% 58%,0 100%);
+}
+
+.letter {
+  position:absolute;
+  z-index:2;
+  left:8%;
+  width:84%;
+  top:-5px;
+  height:315px;
+  padding:30px 32px;
+  overflow:hidden;
+  border-radius:3px;
+  background:
+    radial-gradient(ellipse at 20% 20%,#fff5d9aa,transparent 45%),
+    radial-gradient(ellipse at 90% 85%,#c58d5d25,transparent 38%),
+    repeating-linear-gradient(0deg,#f1dfbf 0 2px,#efdbb8 3px 4px);
+  box-shadow:0 5px 18px #5d34252b;
+  transform:translateY(55px);
+  transition:transform 1.15s cubic-bezier(.2,.8,.2,1),height 1s;
+  color:var(--ink);
+}
+
+.letter:after {
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  opacity:.22;
+  background-image:radial-gradient(#9b6747 .6px,transparent .7px);
+  background-size:5px 5px;
+}
+
+.letter-content {
+  position:relative;
+  z-index:1;
+  opacity:0;
+  transition:opacity .7s .65s;
+}
+
+.letter p {
+  font:clamp(15px,2.2vw,19px)/1.55 'Patrick Hand',cursive;
+  margin:0 0 13px;
+  letter-spacing:.25px;
+}
+
+.letter .signoff {
+  margin-top:22px;
+  font-size:21px;
+}
+
+.letter .signature {
+  font:italic 600 28px 'Playfair Display',serif;
+  margin-top:4px;
+}
+
+/* ENVELOPE FLAP */
+
+.flap {
+  position:absolute;
+  z-index:5;
+  left:0;
+  right:0;
+  top:0;
+  height:170px;
+  background:linear-gradient(145deg,#e8c49e,#d8a77e);
+  clip-path:polygon(0 0,100% 0,50% 100%);
+  transform-origin:top center;
+  transition:transform .85s ease;
+  filter:drop-shadow(0 4px 3px #70402a20);
+}
+
+.front {
+  position:absolute;
+  z-index:4;
+  inset:0;
+  background:linear-gradient(145deg,#e8c49e,#d5a77f);
+  clip-path:polygon(0 0,50% 57%,100% 0,100% 100%,0 100%);
+  pointer-events:none;
+}
+
+.seal {
+  position:absolute;
+  z-index:6;
+  left:50%;
+  top:57%;
+  transform:translate(-50%,-50%);
+  width:58px;
+  height:58px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:radial-gradient(circle at 35% 30%,#d85b76,#a5284a 70%);
+  color:#ffe7d8;
+  font-size:26px;
+  box-shadow:0 4px 12px #74213b55;
+  transition:opacity .35s,transform .35s;
+  border:2px solid #e7a0a8;
+}
+
+/* OPEN ANIMATION */
+
+.open .flap {
+  transform:rotateX(180deg);
+  z-index:1;
+}
+
+.open .seal {
+  opacity:0;
+  transform:translate(-50%,-50%) scale(.5);
+  pointer-events:none;
+}
+
+.envelope-wrap.open {
+  height:620px;
+}
+
+.open .letter {
+  z-index:7;
+  transform:translateY(-88px);
+  height:min(670px,76vh);
+  min-height:550px;
+  overflow:auto;
+}
+
+.open .letter-content {
+  opacity:1;
+}
+
+.open .front {
+  opacity:0;
+  visibility:hidden;
+}
+
+/* BUTTONS */
+
+.hint {
+  position:absolute;
+  bottom:0;
+  width:100%;
+  text-align:center;
+  color:#975d68;
+  font-size:12px;
+  letter-spacing:.08em;
+}
+
+.controls {
+  display:flex;
+  gap:12px;
+  margin-top:24px;
+  z-index:8;
+}
+
+button {
+  border:1px solid #b96b7b;
+  border-radius:999px;
+  padding:12px 20px;
+  cursor:pointer;
+  background:#fff5edcc;
+  color:#81334b;
+  font:600 12px 'DM Sans',sans-serif;
+  letter-spacing:.04em;
+  box-shadow:0 5px 15px #7e3b4b16;
+  transition:transform .2s,background .2s;
+}
+
+button:hover {
+  transform:translateY(-2px);
+  background:#fffaf5;
+}
+
+.replay { display:none; }
+
+/* FLOATING HEARTS */
+
+.heart {
+  position:fixed;
+  bottom:-30px;
+  color:#c84d70;
+  opacity:0;
+  animation:floatUp 7s linear infinite;
+  pointer-events:none;
+}
+
+@keyframes floatUp {
+  0% {
+    transform:translateY(0) rotate(0) scale(.7);
+    opacity:0;
+  }
+  15% { opacity:.55; }
+  85% { opacity:.45; }
+  100% {
+    transform:translateY(-110vh) rotate(35deg) scale(1.2);
+    opacity:0;
+  }
+}
+
+.footer {
+  margin-top:28px;
+  color:#a36c72;
+  font:italic 13px 'Playfair Display',serif;
+}
+
+/* MOBILE RESPONSIVE */
+
+@media(max-width:520px) {
+  .scene { min-height:690px; }
+
+  .envelope-wrap { height:330px; }
+
+  .envelope-wrap.open { height:610px; }
+
+  .envelope {
+    top:45px;
+    height:265px;
+  }
+
+  .letter { padding:23px 20px; }
+
+  .open .letter {
+    height:min(660px,75vh);
+    min-height:530px;
+    transform:translateY(-72px);
+  }
+
+  .flower-bunch {
+    width:94px;
+    height:132px;
+    bottom:0;
+  }
+
+  .flower-bunch.left { left:-39px; }
+  .flower-bunch.right { right:-39px; }
+
+  .flap { height:150px; }
+
+  .letter p {
+    font-size:16px;
+    line-height:1.48;
+  }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  *,*:before,*:after {
+    animation-duration:.01ms!important;
+    transition-duration:.01ms!important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<main class="scene">
+
+<header class="intro" id="intro">
+  <div class="eyebrow">a little something, from the heart</div>
+  <h1>For You ♡</h1>
+  <p>Some words are better when they're opened slowly.</p>
+</header>
+
+<section class="envelope-wrap" id="wrap">
+
+<!-- LEFT TULIPS -->
+<div class="flower-bunch left" aria-hidden="true">
+<svg viewBox="0 0 150 200" xmlns="http://www.w3.org/2000/svg">
+  <path d="M70 190 Q68 125 54 53 M74 190 Q88 128 105 72 M69 190 Q55 145 27 111"
+  fill="none" stroke="#66845a" stroke-width="4" stroke-linecap="round"/>
+
+  <path d="M67 155 Q27 128 21 151 Q42 174 67 155Z M79 160 Q119 126 126 147 Q111 173 79 160Z M55 130 Q31 105 16 118 Q26 143 55 130Z"
+  fill="#78966a"/>
+
+  <path d="M54 59 Q36 48 40 27 Q51 33 55 45 Q59 22 75 15 Q81 37 64 54 Q80 42 91 48 Q83 68 60 67Z"
+  fill="#d76b7d" stroke="#b64b65" stroke-width="1.5"/>
+
+  <path d="M105 78 Q89 66 93 48 Q105 52 108 64 Q115 43 130 43 Q135 64 115 76 Q133 69 140 79 Q128 96 108 86Z"
+  fill="#e8a0a0" stroke="#c87583" stroke-width="1.5"/>
+
+  <path d="M27 116 Q12 105 17 89 Q28 93 31 103 Q37 84 50 86 Q54 104 35 115 Q52 110 58 120 Q47 135 30 124Z"
+  fill="#c94e69" stroke="#a83d59" stroke-width="1.5"/>
+
+  <path d="M57 27 Q56 18 75 7 Q91 19 91 33 Q80 26 75 37 Q67 26 57 27Z"
+  fill="#e58a96"/>
+
+  <path d="M97 51 Q98 39 116 32 Q131 44 129 57 Q118 48 112 61 Q106 50 97 51Z"
+  fill="#f0b4aa"/>
+</svg>
+</div>
+
+<!-- RIGHT TULIPS -->
+<div class="flower-bunch right" aria-hidden="true">
+<svg viewBox="0 0 150 200" xmlns="http://www.w3.org/2000/svg">
+  <path d="M70 190 Q68 125 54 53 M74 190 Q88 128 105 72 M69 190 Q55 145 27 111"
+  fill="none" stroke="#66845a" stroke-width="4" stroke-linecap="round"/>
+
+  <path d="M67 155 Q27 128 21 151 Q42 174 67 155Z M79 160 Q119 126 126 147 Q111 173 79 160Z M55 130 Q31 105 16 118 Q26 143 55 130Z"
+  fill="#78966a"/>
+
+  <path d="M54 59 Q36 48 40 27 Q51 33 55 45 Q59 22 75 15 Q81 37 64 54 Q80 42 91 48 Q83 68 60 67Z"
+  fill="#d76b7d" stroke="#b64b65" stroke-width="1.5"/>
+
+  <path d="M105 78 Q89 66 93 48 Q105 52 108 64 Q115 43 130 43 Q135 64 115 76 Q133 69 140 79 Q128 96 108 86Z"
+  fill="#e8a0a0" stroke="#c87583" stroke-width="1.5"/>
+
+  <path d="M27 116 Q12 105 17 89 Q28 93 31 103 Q37 84 50 86 Q54 104 35 115 Q52 110 58 120 Q47 135 30 124Z"
+  fill="#c94e69" stroke="#a83d59" stroke-width="1.5"/>
+
+  <path d="M57 27 Q56 18 75 7 Q91 19 91 33 Q80 26 75 37 Q67 26 57 27Z"
+  fill="#e58a96"/>
+
+  <path d="M97 51 Q98 39 116 32 Q131 44 129 57 Q118 48 112 61 Q106 50 97 51Z"
+  fill="#f0b4aa"/>
+</svg>
+</div>
+
+<div class="envelope" id="envelope">
+
+  <div class="back-pocket"></div>
+
+  <article class="letter">
+    <div class="letter-content">
+
+      <p>
+      Since you came into my life, everything feels more beautiful.
+      I love thinking about you, our conversations, the laughter
+      we share, and those little moments that, without us even
+      realizing it, become special.
+      </p>
+
+      <p>
+      Being by your side makes me feel calm and happy,
+      as if everything is alright just because you're near.
+      </p>
+
+      <p>
+      I want to keep walking this path with you, learning together
+      and enjoying each day as it comes. Thank you for being you,
+      for your smile, and for making me feel supported.
+      I love you in a sincere and gentle way, the kind of love
+      that grows slowly but with a full heart.
+      </p>
+
+      <p class="signoff">I love you</p>
+      <p class="signature">Ronixx ♡</p>
+
+    </div>
+  </article>
+
+  <div class="flap"></div>
+  <div class="front"></div>
+  <div class="seal">♥</div>
+
+</div>
+
+<div class="hint" id="hint">
+TAP THE ENVELOPE TO OPEN
+</div>
+
+</section>
+
+<div class="controls">
+  <button id="openBtn">Open the letter ✉</button>
+  <button class="replay" id="replayBtn">Read again ↻</button>
+</div>
+
+<div class="footer">made with a little love</div>
+
+</main>
+
+<script>
+const wrap = document.getElementById('wrap');
+const openBtn = document.getElementById('openBtn');
+const replayBtn = document.getElementById('replayBtn');
+const hint = document.getElementById('hint');
+const intro = document.getElementById('intro');
+
+let isOpen = false;
+
+function openLetter() {
+  if (isOpen) return;
+
+  isOpen = true;
+  wrap.classList.add('open');
+
+  hint.textContent = 'A LETTER, JUST FOR YOU ♡';
+
+  openBtn.style.display = 'none';
+  replayBtn.style.display = 'inline-block';
+
+  intro.querySelector('p').textContent =
+    'Take your time. Every word is meant for you.';
+
+  burstHearts();
+}
+
+function closeLetter() {
+  isOpen = false;
+  wrap.classList.remove('open');
+
+  hint.textContent = 'TAP THE ENVELOPE TO OPEN';
+
+  openBtn.style.display = 'inline-block';
+  replayBtn.style.display = 'none';
+
+  intro.querySelector('p').textContent =
+    "Some words are better when they're opened slowly.";
+}
+
+function burstHearts() {
+  for (let i = 0; i < 13; i++) {
+
+    const h = document.createElement('span');
+
+    h.className = 'heart';
+    h.textContent = Math.random() > .45 ? '♥' : '♡';
+
+    h.style.left = (8 + Math.random() * 84) + 'vw';
+    h.style.fontSize = (13 + Math.random() * 19) + 'px';
+
+    h.style.animationDelay = (Math.random() * 2) + 's';
+    h.style.animationDuration = (5 + Math.random() * 4) + 's';
+
+    document.body.appendChild(h);
+
+    setTimeout(() => h.remove(), 10000);
+  }
+}
+
+openBtn.addEventListener('click', openLetter);
+replayBtn.addEventListener('click', closeLetter);
+
+document.querySelector('.envelope')
+  .addEventListener('click', openLetter);
+</script>
+
+</body>
+</html>
